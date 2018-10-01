@@ -1,0 +1,26 @@
+El proyecto pretende desarrollar un asistente para usuarios de bases de datos que facilite la visualización
+de privilegios de bases de datos en múltiples servidores externos entre si que facilite al desarrollo de
+consultas distribuidas.
+El proyecto se compone de tres apartados descritos a continuación:
+
+• Interfaz Web: El sistema debe ser desarrollado en web y tendrá las siguientes funcionalidades:
+  ◦ Registro de múltiples conexiones a bases de datos (datos de conexión básicos – host, nombre
+  de base de datos, puerto, base de datos, usuario y contraseña).
+
+  ◦ Consulta de privilegios a nivel tablas y columnas. Al expandir la conexión se listan los
+  esquemas, al expandir los esquemas se listan los nombres de tablas y sus privilegios, al
+  expandir la tabla se muestran los atributos y sus privilegios.
+
+  ◦ Área de definición de consulta. Permite el usuario escribir código SQL (Solo texto sin control
+  de sintaxis) y lanzar la ejecución. (al dar doble click sobre la conexión de base de datos
+  adjunta a la consulta el string de conexión)
+
+  ◦ Área de resultados. Se presentan los resultados de la consulta en una tabla Web con
+  visualización por paginación (Se muestras de 10 en 10 filas el listado de registros de
+  respuesta).
+
+  • Consultas de privilegios: Determinar los privilegios asignados por el usuario actual a nivel de
+  tablas y columnas.
+
+  • Ejecución distribuida. Se ejecuta la consulta distribuida en el servidor seleccionado por el usuario
+  los entre los servidores registrados.
