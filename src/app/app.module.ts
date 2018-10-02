@@ -1,14 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { IngresoCentralComponent } from './components/ingreso-central/ingreso-central.component';
+import { HomeComponent } from './components/home/home.component';
+
+
+import {APP_ROUTING} from '../app/app.routes';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IngresoCentralComponent,
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    ReactiveFormsModule,
+    APP_ROUTING
   ],
   providers: [],
   bootstrap: [AppComponent]
