@@ -9,7 +9,7 @@ import { IngresoCentralComponent } from './components/ingreso-central/ingreso-ce
 import { HomeComponent } from './components/home/home.component';
 
 
-import {APP_ROUTING} from '../app/app.routes';
+import {APP_ROUTING} from '../app/app.routes'; //imporat archivo de rutas
 
 @NgModule({
   declarations: [
