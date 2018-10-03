@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import { Observable } from "rxjs";
-//import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {Router} from '@angular/router';
 
 import swal from'sweetalert2';
@@ -14,19 +14,43 @@ import swal from'sweetalert2';
 })
 export class IngresoCentralComponent  {
 
-  constructor( private router:Router) { }
+  constructor(private http: HttpClient, private router:Router) { }
 
    ipServer:string="localhost";
-   user:string ="Wilfred";
-   pasw:string="123456789";
-   public datos:any;
+   user:string ="postgres";
+   pasw:string="alvarado";
+   database:string='proyectoBases';
+
 
 
    conect() {
-    swal('Correcto...', "Ingreso Exitoso.", 'success');
-     console.log("Conecta");
-     document.getElementById("closemodal").click();
-     this.router.navigate(['home']);  // redirecciona a ruta
+
+    let jsonConect ={
+      server:this.ipServer,
+      username:this.user,
+      pasw:this.pasw,
+      database:this.database
+    }
+
+
+    return this.http.put("http://localhost:3000/conectar",jsonConect)
+    .subscribe(
+      success => {
+        console.log("datos: ", success);
+        swal('Correcto...', "Ingreso Exitoso.", 'success');
+        document.getElementById("closemodal").click();
+       this.router.navigate(['home']);  //  redirecciona a ruta
+      },
+      err => {
+       swal('Incorrecto...', "Error de conexion con endpoint /conectar.", 'error');
+        console.log("Error ",err);
+      }
+    )
+    ///////////////
+
+
+
+
    }
 
 

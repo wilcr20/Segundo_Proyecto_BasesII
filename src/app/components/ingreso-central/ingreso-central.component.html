@@ -21,7 +21,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModal">Ingrese los datos solicitados</h5>
+                    <h5 class="modal-title" id="loginModal">Ingrese los credenciales solicitados</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -29,12 +29,16 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label class="col-form-label">Ip del Servidor:</label>
+                            <label class="col-form-label">Ip del Servidor Central:</label>
                             <input type="text" [(ngModel)]="ipServer" name="ipServer" placeholder="Ej: 127.0.0.1" class="form-control" id="ip-name" required>
                         </div>
                         <div class="form-group">
+                            <label class="col-form-label">Base de datos:</label>
+                            <input type="text" [(ngModel)]="database" name="database" class="form-control" id="dbname" required>
+                        </div>
+                        <div class="form-group">
                             <label class="col-form-label">Usuario:</label>
-                            <input type="text" [(ngModel)]="user" name="user" class="form-control" id="message-text">
+                            <input type="text" [(ngModel)]="user" name="user" class="form-control" id="username">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Contraseña:</label>

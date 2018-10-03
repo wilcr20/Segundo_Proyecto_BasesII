@@ -1,25 +1,21 @@
-const { Client } = require('pg');
+const { Pool, Client } = require('pg'); // Modulo requerido para definir
+
 
 exports.conecta = function() {
-    var connectionData = {
+
+
+    const client = new Client({
         user: 'postgres',
         host: 'localhost',
         database: 'proyectoBases',
         password: 'alvarado',
-        port: 5432
-    }
+        port: 5432,
+    })
+    client.connect()
 
-    const client = new Client(connectionData);
-
-
-    client.query("select * from persona")
-        .then(response => {
-            console.log("resp: ", response.rows)
-            client.end()
-        })
-        .catch(err => {
-            console.log("fail");
-            client.end()
-        })
+    client.query('SELECT * from persona', (err, res) => {
+        console.log("ResultadoS: \n", err, res.rows);
+        client.end()
+    })
 
 }

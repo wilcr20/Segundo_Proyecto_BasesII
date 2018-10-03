@@ -4,8 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-const config = require('./connection');
-
+var ctrl = require('./controladores'); // llama los controladores
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,12 +21,9 @@ app.use(function(req, res, next) {
 
 //app.get('/obtenerDB', ctrl.obtenerDb);
 
-app.get('/w', function(req, res) {
-    config.conecta();
-    res.send("YEP");
+app.put('/conectar', ctrl.conectarServer);
 
-});
-
+app.put('/conectarNodo', ctrl.conectarNodo);
 
 app.get('/', function(req, res) {
     res.send('Servidor de NodeJs para proyecto Bases de datos II!');

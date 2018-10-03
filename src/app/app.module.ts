@@ -20,6 +20,7 @@ import {APP_ROUTING} from '../app/app.routes'; //imporat archivo de rutas
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     ReactiveFormsModule,
     APP_ROUTING
