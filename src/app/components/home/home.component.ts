@@ -13,10 +13,20 @@ export class HomeComponent {
 
   constructor(private http: HttpClient) { }
 
-  pruebaNodo(){
-    let json={};
+  ipServer:string="localhost";
+   user:string ="postgres";
+   pasw:string="alvarado";
+   database:string='proyectoBases';
 
-    return this.http.put("http://localhost:3000/conectarNodo",json)
+  pruebaNodo(){
+    let jsonConect ={
+      server:this.ipServer,
+      username:this.user,
+      pasw:this.pasw,
+      database:this.database
+    }
+
+    return this.http.put("http://localhost:3000/conectarNodo",jsonConect)
     .subscribe(
       success => {
         console.log("datos: ", success);

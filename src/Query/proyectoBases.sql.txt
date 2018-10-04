@@ -1,0 +1,51 @@
+/*
+create table persona
+(
+	nombre varchar(25),
+	edad int,
+	apellido1 varchar(25),
+	apellido2 varchar(25),
+	cedula int Primary Key
+)
+
+create table paises
+(
+	nombre varchar(25),
+	id SERIAL PRIMARY KEY
+)
+insert into paises values ('Costa Rica');
+insert into paises values ('Italia');
+insert into paises values ('España');
+insert into paises values ('Argentina');
+insert into paises values ('Brazil');
+
+select * from paises;
+
+*/
+
+--create role invitado with login password '123456';  -- crea el suario con sus credenciales
+--create role wilfred with login password '123456';  -- crea el suario con sus credenciales
+
+--grant select (nombre,edad,apellido1,apellido2,cedula) on persona to invitado;  -- otorga privilegios en tabla
+--grant select (nombre,apellido1,apellido2) on persona to wilfred;  -- otorga privilegios en tabla
+--grant insert on persona to wilfred;
+-- grant update(edad) on persona to invitado;
+-- grant update(nombre,apellido1,apellido2) on persona to wilfred;
+
+
+--grant select (nombre) on paises to invitado;
+--grant select (nombre,id) on paises to wilfred;
+--grant insert on paises to invitado;
+--grant insert on paises to wilfred;
+-- grant update(nombre) on paises to invitado;
+-- grant update(nombre) on paises to wilfred;
+-- grant delete on paises to wilfred;
+
+
+--GRANT USAGE, SELECT ON SEQUENCE cities_id_seq TO www;
+
+
+
+--select * from persona
+
+

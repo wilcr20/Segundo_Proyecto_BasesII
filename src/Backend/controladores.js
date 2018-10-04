@@ -20,12 +20,11 @@ exports.conectarServer = function(req, res) {
 };
 
 exports.conectarNodo = function(req, res) {
-
-    console.log("entra a conectarNodo----------------");
+    // client.connect();
+    console.log("entra a conectarNodooo----------------");
     client.query('SELECT * from persona', (err, res) => {
         console.log("\n\nResultadoS: \n", err, res.rows);
-        client.end()
+        //client.end();
     })
-
 
 };

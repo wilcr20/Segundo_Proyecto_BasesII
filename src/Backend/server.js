@@ -18,7 +18,6 @@ app.use(function(req, res, next) {
 });
 
 
-
 //app.get('/obtenerDB', ctrl.obtenerDb);
 
 app.put('/conectar', ctrl.conectarServer);
