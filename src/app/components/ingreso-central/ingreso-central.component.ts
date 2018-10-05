@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 
 import swal from'sweetalert2';
 
-
 @Component({
   selector: 'app-ingreso-central',
   templateUrl: './ingreso-central.component.html',
@@ -37,9 +36,14 @@ export class IngresoCentralComponent  {
     .subscribe(
       success => {
         console.log("datos: ", success);
-        swal('Correcto...', "Ingreso Exitoso.", 'success');
-        document.getElementById("closemodal").click();
-       this.router.navigate(['home']);  //  redirecciona a ruta
+        if(success == true){
+          swal('Correcto...', "Ingreso Exitoso.", 'success');
+          document.getElementById("closemodal").click();
+          this.router.navigate(['home']);  //  redirecciona a ruta
+        }else{
+          swal('Incorecto...', "Ingreso erroneo. Verifique sus credenciales.", 'error');
+        }
+
       },
       err => {
        swal('Incorrecto...', "Error de conexion con endpoint /conectar.", 'error');

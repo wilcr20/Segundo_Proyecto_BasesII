@@ -36,7 +36,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closemodal" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" (click)="conect()" class="btn btn-success">Conectar</button>
+                <button type="button" (click)="pruebaNodo()" class="btn btn-success">Conectar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="padding-top:5%;padding-left:0%;">
+    <div *ngFor="let nodo of listaNodo;let i=index;" style="padding-top:1%;padding-left:0%;">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+                <span style="color: red">  Servidor: </span>
+                <span id="pServer{{i}}"> {{nodo.server}} </span><br>
+                <!-- <input type="text" id="pass" disabled>-->
+                <span style="color: red"> Usuario: </span>
+                <span id="pUser{{i}}"> {{nodo.username}} </span><br>
+                <span style="color: red"> Contraseña: </span>
+                <span id="pPasw{{i}}"> ***** </span><br>
+                <span style="color: red"> DataBase: </span>
+                <span id="pDB{{i}}"> {{nodo.database}} </span><br>
+                <button type="button" (click)="DBUsar(nodo.server,nodo.username,nodo.pasw,nodo.database)" class="btn btn-info">Usar</button>
             </div>
         </div>
     </div>
