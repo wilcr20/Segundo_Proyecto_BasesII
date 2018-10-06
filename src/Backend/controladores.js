@@ -11,8 +11,7 @@ exports.conectarServer = function(req, res) {
 
 
 exports.conectarNodo = function(req, res) {
-    // client.connect();
-    console.log("entra a conectarNodooo----------------");
+
 
     logica.conectarNodo(req, function(data) {
         res.send(data);
