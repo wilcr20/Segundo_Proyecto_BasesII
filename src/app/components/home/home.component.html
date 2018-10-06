@@ -1,9 +1,10 @@
+<!-- Botón para lograr realziar una nueva conexion dblink -->
 <div style="float:left;padding-top:2%;">
     <button type="button" data-toggle="modal" data-target="#loginModal" class="btn btn-success">Realizar nueva conexión.</button>
 </div>
+<!---->
 
-
-
+<!-- Modal para la autenticacion de conexión a un nuevo nodo-->
 <div class="modal fade special-card" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModallLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -41,7 +42,10 @@
         </div>
     </div>
 </div>
+<!---->
 
+
+<!-- Generador de Conexiones a nodos de manera grafica -->
 <div style="padding-top:5%;padding-left:0%;">
     <div *ngFor="let nodo of listaNodo;let i=index;" style="padding-top:1%;padding-left:0%;">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
@@ -55,8 +59,12 @@
                 <span id="pPasw{{i}}"> ***** </span><br>
                 <span style="color: red"> DataBase: </span>
                 <span id="pDB{{i}}"> {{nodo.database}} </span><br>
-                <button type="button" (click)="DBUsar(nodo.server,nodo.username,nodo.pasw,nodo.database)" class="btn btn-info">Usar</button>
+                <span style="color: red"> Alias DBlink: </span>
+                <span id="pDBLink{{i}}"> {{i+1}} </span><br><br>
+                <button type="button" (click)="DBUsar(nodo.server,nodo.username,nodo.pasw,nodo.database,i+1)" class="btn btn-info">Usar</button><br>
+                <button type="button" (click)="ConsultaQuery(nodo.server,nodo.username,nodo.pasw,nodo.database,i+1)" class="btn btn-warning">Definición de consulta.</button>
             </div>
         </div>
     </div>
 </div>
+<!---->
