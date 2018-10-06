@@ -18,11 +18,13 @@ app.use(function(req, res, next) {
 });
 
 
-//app.get('/obtenerDB', ctrl.obtenerDb);
 
 app.put('/conectar', ctrl.conectarServer);
 
 app.put('/conectarNodo', ctrl.conectarNodo);
+
+app.put('/obtenerSchemas', ctrl.obtenerSchema);
+
 
 app.get('/', function(req, res) {
     res.send('Servidor de NodeJs para proyecto Bases de datos II!');

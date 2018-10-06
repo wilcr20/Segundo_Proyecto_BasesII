@@ -61,10 +61,24 @@
                 <span id="pDB{{i}}"> {{nodo.database}} </span><br>
                 <span style="color: red"> Alias DBlink: </span>
                 <span id="pDBLink{{i}}"> {{i+1}} </span><br><br>
-                <button type="button" (click)="DBUsar(nodo.server,nodo.username,nodo.pasw,nodo.database,i+1)" class="btn btn-info">Usar</button><br>
+                <button type="button" (click)="obtenerSchemas(nodo.server,nodo.username,nodo.pasw,nodo.database,i+1)" class="btn btn-info">Usar</button><br>
                 <button type="button" (click)="ConsultaQuery(nodo.server,nodo.username,nodo.pasw,nodo.database,i+1)" class="btn btn-warning">Definición de consulta.</button>
             </div>
         </div>
     </div>
 </div>
 <!---->
+
+
+<!-- Generador de Conexiones a nodos de manera grafica -->
+<div style="padding-top:5%;padding-left:40%;">
+    <div *ngFor="let esquema of listaSchemas;let i=index;" style="padding-top:1%;padding-left:0%;">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+                <span style="color: red">  Esquema: </span>
+                <span id="schem{{i}}"> {{esquema.nombre}} </span><br>
+                <button type="button" (click)="obtenerTablas(esquema.tabla)" class="btn btn-info">Usar</button><br>
+            </div>
+        </div>
+    </div>
+</div>

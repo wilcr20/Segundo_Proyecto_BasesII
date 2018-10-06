@@ -21,6 +21,18 @@ insert into paises values ('Brazil');
 
 select * from paises;
 
+
+create table mascotas 
+(
+	nombre varchar(25),
+	animal varchar(20)
+)
+insert into mascotas values('Max','Chihuahua');
+insert into mascotas values('Pedrito','Perico');
+select * from mascotas;
+
+
+
 */
 
 --create role invitado with login password '123456';  -- crea el suario con sus credenciales
