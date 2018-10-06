@@ -50,11 +50,14 @@ export class HomeComponent {
 
 
 
-  DBUsar(server,user,pasw,db){
+  DBUsar(server,user,pasw,db){        /// aca estan las credenciales
     console.log("Servidor: "+ server);
     console.log("User: "+ user);
     console.log("Pasw: "+ pasw);
     console.log("DataBase: "+ db);
+
+
+
   }
 
 }
