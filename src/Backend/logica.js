@@ -61,24 +61,18 @@ exports.conectarNodo = function conectarNodo(data, callback) { // realiza conexi
 }
 
 
-
-
-/*
-exports.conectarNodo = function conectarNodo(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
-    console.log("...");
-
-    client.query("select * from dblink('host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "', 'select schema_name from information_schema.schemata') as esquemas ( nombre  character varying );	", (err, res) => {
-        console.log("ERROR", err);
+exports.obtenerSchema = function conectarNodo(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
+    console.log("entra a esqumas obtener");
+    client.query("select * from dblink('host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "', 'select DISTINCT  table_schema from information_schema.role_table_grants') as esquemas ( nombre  character varying );	", (err, res) => {
         if (err) {
-            console.log("Error de conexion a datos.");
-            //callback(false);
+            console.log("Error de obtencion esquema a datos.");
+            callback(false);
 
         } else {
-            console.log("\n\nResultadoS: \n", err, res.rows);
-            // callback(true);
+            console.log("\n\nResultados de esquemas: \n", res.rows);
+            callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
         }
 
     })
-    console.log("..");
 
-}*/
+}

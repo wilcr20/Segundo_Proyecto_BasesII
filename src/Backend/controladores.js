@@ -1,6 +1,7 @@
 const { Pool, Client } = require('pg'); // Modulo requerido para definir
 var logica = require('./logica');
 
+
 exports.conectarServer = function(req, res) {
     logica.conectarServer(req, function(data) {
         res.send(data);
@@ -11,14 +12,18 @@ exports.conectarServer = function(req, res) {
 
 
 exports.conectarNodo = function(req, res) {
-
-
     logica.conectarNodo(req, function(data) {
         res.send(data);
         console.log("Data recibida : ", data);
         res.end();
     });
+};
 
 
-
+exports.obtenerSchema = function(req, res) {
+    logica.obtenerSchema(req, function(data) {
+        res.send(data);
+        console.log("Data recibida : ", data);
+        res.end();
+    });
 };
