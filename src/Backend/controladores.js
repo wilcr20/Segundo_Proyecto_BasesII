@@ -27,3 +27,27 @@ exports.obtenerSchema = function(req, res) {
         res.end();
     });
 };
+
+exports.obtenerTablas = function(req, res) {
+    logica.obtenerTablas(req, function(data) {
+        res.send(data);
+        console.log("Data recibida : ", data);
+        res.end();
+    });
+};
+
+exports.obtenerPrivilegiosTablas = function(req, res) {
+    logica.obtenerPrivilegiosTablas(req, function(data) {
+        res.send(data);
+        console.log("Data recibida : ", data);
+        res.end();
+    });
+};
+
+exports.obtenerPrivilegiosColumnas = function(req, res) {
+    logica.obtenerPrivilegiosColumnas(req, function(data) {
+        res.send(data);
+        console.log("Data recibida : ", data);
+        res.end();
+    });
+};

@@ -61,8 +61,7 @@ exports.conectarNodo = function conectarNodo(data, callback) { // realiza conexi
 }
 
 
-exports.obtenerSchema = function conectarNodo(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
-    console.log("entra a esqumas obtener");
+exports.obtenerSchema = function obtenerSchema(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
     client.query("select * from dblink('host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "', 'select DISTINCT  table_schema from information_schema.role_table_grants') as esquemas ( nombre  character varying );	", (err, res) => {
         if (err) {
             console.log("Error de obtencion esquema a datos.");
@@ -73,6 +72,52 @@ exports.obtenerSchema = function conectarNodo(data, callback) { // realiza conex
             callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
         }
 
+    })
+}
+
+
+exports.obtenerTablas = function obtenerTablas(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
+    client.query("select * from dblink('host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "','select distinct table_name from information_schema.column_privileges where table_schema = ''" + data.body.esquema + "'' ') as  tablas (nombre character varying);", (err, res) => {
+
+
+        if (err) {
+            console.log("Error de obtencion tablas de esquema.");
+            callback(false);
+
+        } else {
+            console.log("\n\nResultados de tablas: \n", res.rows);
+            callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
+        }
+
+    })
+}
+
+
+exports.obtenerPrivilegiosTablas = function obtenerPrivilegiosTablas(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
+    client.query("select * from dblink('host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "','select privilege_type from information_schema.role_table_grants where table_schema = ''" + data.body.esquema + "'' and table_name=''" + data.body.table + "'' ') as  tablas (nombre character varying);", (err, res) => {
+        if (err) {
+            console.log("Error de obtencion tablas de esquema.");
+            callback(false);
+
+        } else {
+            console.log("\n\nResultados de prvil: \n", res.rows);
+            callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
+        }
+    })
+
+}
+
+
+exports.obtenerPrivilegiosColumnas = function obtenerPrivilegiosColumnas(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
+    client.query("select * from dblink('host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "','select column_name,privilege_type from information_schema.column_privileges where table_schema = ''" + data.body.esquema + "'' and table_name=''" + data.body.table + "'' ') as tabla (columna character varying,rol character varying );", (err, res) => {
+        if (err) {
+            console.log("Error de obtencion tablas de esquema.");
+            callback(false);
+
+        } else {
+            console.log("\n\nResultados de tablas: \n", res.rows);
+            callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
+        }
     })
 
 }

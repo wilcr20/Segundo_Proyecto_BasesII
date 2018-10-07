@@ -25,6 +25,12 @@ app.put('/conectarNodo', ctrl.conectarNodo);
 
 app.put('/obtenerSchemas', ctrl.obtenerSchema);
 
+app.put('/obtenerTablas', ctrl.obtenerTablas);
+
+app.put('/obtenerPrivilegiosTablas', ctrl.obtenerPrivilegiosTablas);
+
+app.put('/obtenerPrivilegiosColumnas', ctrl.obtenerPrivilegiosColumnas);
+
 
 app.get('/', function(req, res) {
     res.send('Servidor de NodeJs para proyecto Bases de datos II!');

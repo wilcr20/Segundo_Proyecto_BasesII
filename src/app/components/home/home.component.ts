@@ -17,6 +17,7 @@ export class HomeComponent {
 
   listaNodo:Array<nodo>=[];
   listaSchemas:any={};
+  listaTablas:any={};
 
     // Variables NgModel ...
    ipServer:string="localhost";
@@ -32,7 +33,8 @@ export class HomeComponent {
    userActual:string;
    paswActual:string;
    databaseActual:string;
-  schemaActual:string;
+   schemaActual:string;
+   tablaActual:string;
 
    nuevoNodo:any; // variable guarda objeto nodo creado
 
@@ -96,6 +98,7 @@ export class HomeComponent {
           swal('Incorecto...', "Error", 'error');
         }else{
           this.listaSchemas= success;
+          this.listaTablas={};
           console.log("esquemas obtenidos: ",this.listaSchemas);
         }
       },
@@ -113,7 +116,109 @@ export class HomeComponent {
     this.schemaActual= esquema;
     console.log("Nombre Scheama usar, "+ esquema);
 
+    let jsonConect ={  // Json a enviar por el endpoint
+      server:this.serverActual,
+      username:this.userActual,
+      pasw:this.paswActual,
+      database:this.databaseActual,
+      esquema: this.schemaActual
+    }
+
+    return this.http.put("http://localhost:3000/obtenerTablas",jsonConect)
+    .subscribe(
+      success => {
+        if(success == false){
+          swal('Incorecto...', "Error", 'error');
+        }else{
+          this.listaTablas= success;
+          console.log("tablas obtenidos: ",this.listaTablas);
+        }
+      },
+      err => {
+       swal('Incorrecto...', "Error de conexion con endpoint /conectarNodo.", 'error');
+        console.log("Error ",err);
+      }
+    )
   }
+
+
+
+  obtenerPrivilegiosTabla(tabla){
+    this.tablaActual= tabla;
+
+    let jsonConect ={  // Json a enviar por el endpoint
+      server:this.serverActual,
+      username:this.userActual,
+      pasw:this.paswActual,
+      database:this.databaseActual,
+      esquema: this.schemaActual,
+      table:this.tablaActual
+    }
+
+    return this.http.put("http://localhost:3000/obtenerPrivilegiosTablas",jsonConect)
+    .subscribe(
+      success => {
+        if(success == false){
+          swal('Incorecto...', "Error", 'error');
+        }else{
+          swal('Privilegios de tabla...', JSON.stringify(success), 'info');
+         // this.listaTablas= success;
+          console.log("privile obtenidos: ",success);
+        }
+      },
+      err => {
+       swal('Incorrecto...', "Error de conexion con endpoint /conectarNodo.", 'error');
+        console.log("Error ",err);
+      }
+    )
+  }
+
+
+  obtenerPrivilegiosColumnas(tabla){
+    this.tablaActual= tabla;
+    console.log(tabla);
+
+    let jsonConect ={  // Json a enviar por el endpoint
+      server:this.serverActual,
+      username:this.userActual,
+      pasw:this.paswActual,
+      database:this.databaseActual,
+      esquema: this.schemaActual,
+      table:this.tablaActual
+    }
+
+    return this.http.put("http://localhost:3000/obtenerPrivilegiosColumnas",jsonConect)
+    .subscribe(
+      success => {
+        if(success == false){
+          swal('Incorecto...', "Error", 'error');
+        }else{
+          swal('Privilegios de columnas de tabla...', JSON.stringify(success), 'info');
+         // this.listaTablas= success;
+          console.log("privile obtenidos: ",success);
+        }
+      },
+      err => {
+       swal('Incorrecto...', "Error de conexion con endpoint /conectarNodo.", 'error');
+        console.log("Error ",err);
+      }
+    )
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

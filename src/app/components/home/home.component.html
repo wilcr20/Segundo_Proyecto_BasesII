@@ -70,14 +70,31 @@
 <!---->
 
 
-<!-- Generador de Conexiones a nodos de manera grafica -->
-<div style="padding-top:5%;padding-left:40%;">
+<!-- Generador de Esquemas de una base de datos seleccionada -->
+<div *ngIf="listaSchemas.length >0" style="padding-top:2%;float:left; padding-left:15%;">
+    <h3>Esquemas</h3>
     <div *ngFor="let esquema of listaSchemas;let i=index;" style="padding-top:1%;padding-left:0%;">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-body">
-                <span style="color: red">  Esquema: </span>
-                <span id="schem{{i}}"> {{esquema.nombre}} </span><br>
-                <button type="button" (click)="obtenerTablas(esquema.tabla)" class="btn btn-info">Usar</button><br>
+                <span style="color: red"> Esquema: </span>
+                <span id="schem{{i}}"> {{esquema.nombre}} </span><br><br>
+                <button type="button" (click)="obtenerTablas(esquema.nombre)" class="btn btn-info">Usar</button><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Generador de Tablas de un esquema seleccionado -->
+<div *ngIf="listaTablas.length >0" style="padding-top:2%;float:left; padding-left:19%;">
+    <h3>Tablas</h3>
+    <div *ngFor="let tabla of listaTablas;let i=index;" style="padding-top:1%;padding-left:0%;">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+                <span style="color: red"> Tabla: </span>
+                <span id="tbl{{i}}"> {{tabla.nombre}} </span><br><br>
+                <button type="button" (click)="obtenerPrivilegiosTabla(tabla.nombre)" class="btn btn-info">Ver privilegios de Tabla.</button><br><br>
+                <button type="button" (click)="obtenerPrivilegiosColumnas(tabla.nombre)" class="btn btn-info">Ver columnas con privilegios.</button><br>
             </div>
         </div>
     </div>
