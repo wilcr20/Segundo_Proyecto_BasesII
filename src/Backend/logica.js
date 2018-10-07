@@ -4,7 +4,7 @@ const { Pool, Client } = require('pg'); // Modulo requerido para definir
 
 
 exports.conectarServer = function conectarServer(data, callback) {
-    //console.log("data.body recibido: ", data.body);
+    // console.log("data.body recibido : ", data.body);
     client = new Client({
         user: data.body.username,
         host: data.body.server,
@@ -45,7 +45,7 @@ creaDbLink = function() {
 
 
 exports.conectarNodo = function conectarNodo(data, callback) { // realiza conexion dblink
-    //console.log("select dblink_connect( '" + data.body.conn + "', 'host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "')");
+    console.log("select dblink_connect( '" + data.body.conn + "', 'host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "')");
     client.query("select dblink_connect( '" + data.body.conn + "', 'host=" + data.body.server + " user=" + data.body.username + " password=" + data.body.pasw + " dbname=" + data.body.database + "')", (err, res) => {
         if (err) {
             console.log("Error de conexion a nodo.");
@@ -116,6 +116,23 @@ exports.obtenerPrivilegiosColumnas = function obtenerPrivilegiosColumnas(data, c
 
         } else {
             console.log("\n\nResultados de tablas: \n", res.rows);
+            callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
+        }
+    })
+
+}
+
+
+exports.enviarQuery = function enviarQuery(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
+    console.log("query envia: ", data.body.queryF);
+    client.query(data.body.queryF, (err, res) => {
+        console.log(res);
+        if (err) {
+            console.log("Error de ejecucion query.");
+            callback(false);
+
+        } else {
+            console.log("\n\nResultados de query: \n", res.rows);
             callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
         }
     })

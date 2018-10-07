@@ -25,10 +25,12 @@ export class HomeComponent {
    pasw:string="alvarado";
    database:string='proyectoBases';
    queryUser:string= 'Select * from ';
+   conn:string='conn';
    numConexion=0;
 
 
    // Variables de datos para verificar con la conexion actual.
+   connDBlinkActual:string;
    serverActual:string;
    userActual:string;
    paswActual:string;
@@ -43,13 +45,14 @@ export class HomeComponent {
     this.nuevoNodo = new nodo( this.ipServer,this.user,this.pasw, this.database );
 
     this.numConexion++;
+    let newConn= this.conn+this.numConexion; // conn0 , conn1, conn2
 
     let jsonConect ={    // Json a enviar por el endpoint
       server:this.ipServer,
       username:this.user,
       pasw:this.pasw,
       database:this.database,
-      conn:this.numConexion
+      conn: newConn
     }
 
     return this.http.put("http://localhost:3000/conectarNodo",jsonConect)
@@ -59,7 +62,9 @@ export class HomeComponent {
           swal('Correcto...', "Ingreso Exitoso.", 'success');
           document.getElementById("closemodal").click();
           this.listaNodo.push(this.nuevoNodo);
-          console.log("Se inserta nodo nuevo");
+          this.listaSchemas={};
+          this.listaTablas={};
+
         }else{
           swal('Incorecto...', "Ingreso erroneo. Verifique sus credenciales.", 'error');
         }
@@ -82,6 +87,7 @@ export class HomeComponent {
    this.userActual= user;
    this.paswActual= pasw;
    this.databaseActual=db;
+   this.connDBlinkActual= dblink;
 
 
     let jsonConect ={  // Json a enviar por el endpoint
@@ -103,7 +109,7 @@ export class HomeComponent {
         }
       },
       err => {
-       swal('Incorrecto...', "Error de conexion con endpoint /conectarNodo.", 'error');
+       swal('Incorrecto...', "Error de conexion con endpoint /obtenerSchemas.", 'error');
         console.log("Error ",err);
       }
     )
@@ -114,7 +120,6 @@ export class HomeComponent {
 
   obtenerTablas(esquema){
     this.schemaActual= esquema;
-    console.log("Nombre Scheama usar, "+ esquema);
 
     let jsonConect ={  // Json a enviar por el endpoint
       server:this.serverActual,
@@ -135,7 +140,7 @@ export class HomeComponent {
         }
       },
       err => {
-       swal('Incorrecto...', "Error de conexion con endpoint /conectarNodo.", 'error');
+       swal('Incorrecto...', "Error de conexion con endpoint /obtenerTablas.", 'error');
         console.log("Error ",err);
       }
     )
@@ -167,7 +172,7 @@ export class HomeComponent {
         }
       },
       err => {
-       swal('Incorrecto...', "Error de conexion con endpoint /conectarNodo.", 'error');
+       swal('Incorrecto...', "Error de conexion con endpoint /obtenerPrivilegiosTablas.", 'error');
         console.log("Error ",err);
       }
     )
@@ -204,31 +209,40 @@ export class HomeComponent {
       }
     )
 
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
   // Para realizar una consulta cuialquiera a una base de datos en especifico  .... aun no hecha ... >>:v NO TOCAR
   ConsultaQuery(server,user,pasw,db,dblink){
-    console.log("ejecuta consulta query");
+
     console.log(" ---- "+ this.queryUser);
+
+    let queryFinal= "select * from dblink('host="+ server +" user="+ user+" password="+pasw+" dbname="+db+"',"+this.queryUser;
+    console.log("Query final a enviar inicia asi: ",queryFinal );
+    console.log("--");
+
+    let jsonConect ={  // Json a enviar por el endpoint
+      queryF:queryFinal
+    }
+
+    return this.http.put("http://localhost:3000/enviarQuery",jsonConect)
+    .subscribe(
+      success => {
+        if(success == false){
+          swal('Incorecto...', "Error", 'error');
+        }else{
+          swal('Eejcucion de query ...', JSON.stringify(success), 'info');
+          console.log("privile obtenidos: ",success);
+        }
+      },
+      err => {
+       swal('Incorrecto...', "Error de conexion con endpoint /enviarQuery.", 'error');
+        console.log("Error ",err);
+      }
+    )
+
+
   }
 
 

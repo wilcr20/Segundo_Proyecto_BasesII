@@ -31,6 +31,7 @@ app.put('/obtenerPrivilegiosTablas', ctrl.obtenerPrivilegiosTablas);
 
 app.put('/obtenerPrivilegiosColumnas', ctrl.obtenerPrivilegiosColumnas);
 
+app.put('/enviarQuery', ctrl.enviarQuery);
 
 app.get('/', function(req, res) {
     res.send('Servidor de NodeJs para proyecto Bases de datos II!');

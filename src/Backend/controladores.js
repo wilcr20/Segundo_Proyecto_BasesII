@@ -51,3 +51,11 @@ exports.obtenerPrivilegiosColumnas = function(req, res) {
         res.end();
     });
 };
+
+exports.enviarQuery = function(req, res) {
+    logica.enviarQuery(req, function(data) {
+        res.send(data);
+        console.log("Data recibida : ", data);
+        res.end();
+    });
+};
