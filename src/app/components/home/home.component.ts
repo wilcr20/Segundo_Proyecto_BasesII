@@ -18,13 +18,18 @@ export class HomeComponent {
   listaNodo:Array<nodo>=[];
   listaSchemas:any={};
   listaTablas:any={};
+  resultadoQuery:Array<string>=[];
 
     // Variables NgModel ...
    ipServer:string="localhost";
    user:string ="postgres";
    pasw:string="alvarado";
    database:string='proyectoBases';
-   queryUser:string= 'Select * from ';
+   queryUser:string= "'select id from paises where nombre = ''Italia''')  as pais (id int);";
+
+
+   queryDistr:string="select e_sc.carnet,nombre,apellido1,apellido2,e_sc.estado  from 	estudiantes as e_sc  inner join  (select * from dblink('conn',  'select * from estudiantes') as  est_cartago (carnet	int,nombre	varchar(50), apellido1	varchar(50))) as e_ca on e_sc.carnet=e_ca.carnet;";
+
    conn:string='conn';
    numConexion=0;
 
@@ -43,7 +48,7 @@ export class HomeComponent {
 
   pruebaNodo(){  // Metodo para conectar nodos de base de datos, mediante DBlink
     this.nuevoNodo = new nodo( this.ipServer,this.user,this.pasw, this.database );
-
+    this.resultadoQuery=[];
     this.numConexion++;
     let newConn= this.conn+this.numConexion; // conn0 , conn1, conn2
 
@@ -88,7 +93,7 @@ export class HomeComponent {
    this.paswActual= pasw;
    this.databaseActual=db;
    this.connDBlinkActual= dblink;
-
+   this.resultadoQuery=[];
 
     let jsonConect ={  // Json a enviar por el endpoint
       server:server,
@@ -128,6 +133,7 @@ export class HomeComponent {
       database:this.databaseActual,
       esquema: this.schemaActual
     }
+    this.resultadoQuery=[];
 
     return this.http.put("http://localhost:3000/obtenerTablas",jsonConect)
     .subscribe(
@@ -159,6 +165,7 @@ export class HomeComponent {
       esquema: this.schemaActual,
       table:this.tablaActual
     }
+    this.resultadoQuery=[];
 
     return this.http.put("http://localhost:3000/obtenerPrivilegiosTablas",jsonConect)
     .subscribe(
@@ -182,6 +189,7 @@ export class HomeComponent {
   obtenerPrivilegiosColumnas(tabla){
     this.tablaActual= tabla;
     console.log(tabla);
+    this.resultadoQuery=[];
 
     let jsonConect ={  // Json a enviar por el endpoint
       server:this.serverActual,
@@ -216,7 +224,6 @@ export class HomeComponent {
   // Para realizar una consulta cuialquiera a una base de datos en especifico  .... aun no hecha ... >>:v NO TOCAR
   ConsultaQuery(server,user,pasw,db,dblink){
 
-    console.log(" ---- "+ this.queryUser);
 
     let queryFinal= "select * from dblink('host="+ server +" user="+ user+" password="+pasw+" dbname="+db+"',"+this.queryUser;
     console.log("Query final a enviar inicia asi: ",queryFinal );
@@ -225,6 +232,7 @@ export class HomeComponent {
     let jsonConect ={  // Json a enviar por el endpoint
       queryF:queryFinal
     }
+    this.resultadoQuery=[];
 
     return this.http.put("http://localhost:3000/enviarQuery",jsonConect)
     .subscribe(
@@ -232,8 +240,17 @@ export class HomeComponent {
         if(success == false){
           swal('Incorecto...', "Error", 'error');
         }else{
+          this.listaSchemas={};
+          this.listaTablas={};
           swal('Eejcucion de query ...', JSON.stringify(success), 'info');
-          console.log("privile obtenidos: ",success);
+          //this.resultadoQuery= success;
+
+          var tam= success.length;
+          for(var i=0; i<tam; i++){
+            var p:string= JSON.stringify(success[i]);
+            this.resultadoQuery.push(p);
+          }
+
         }
       },
       err => {
@@ -242,6 +259,45 @@ export class HomeComponent {
       }
     )
 
+
+  }
+
+
+
+
+
+
+  consultaDistribuida(){
+
+    let jsonConect ={  // Json a enviar por el endpoint
+      query:this.queryDistr
+    }
+
+    return this.http.put("http://localhost:3000/enviarQueryDistrib",jsonConect)
+    .subscribe(
+      success => {
+        if(success == false){
+          swal('Incorecto...', "Error", 'error');
+        }else{
+          this.resultadoQuery=[];
+          this.listaSchemas={};
+          this.listaTablas={};
+          swal('Ejcucion de query ...', JSON.stringify(success), 'info');
+
+
+          var tam= success.length;
+          for(var i=0; i<tam; i++){
+            var p:string= JSON.stringify(success[i]);
+            this.resultadoQuery.push(p);
+          }
+
+        }
+      },
+      err => {
+       swal('Incorrecto...', "Error de conexion con endpoint /enviarQueryDistrib.", 'error');
+        console.log("Error ",err);
+      }
+    )
 
   }
 

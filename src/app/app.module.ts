@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 
 import { AppComponent } from './app.component';
 import { IngresoCentralComponent } from './components/ingreso-central/ingreso-central.component';
@@ -23,7 +24,8 @@ import {APP_ROUTING} from '../app/app.routes'; //imporat archivo de rutas
     HttpClientModule,
     HttpModule,
     ReactiveFormsModule,
-    APP_ROUTING
+    APP_ROUTING,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

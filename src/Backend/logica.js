@@ -138,3 +138,21 @@ exports.enviarQuery = function enviarQuery(data, callback) { // realiza conexion
     })
 
 }
+
+
+exports.enviarQueryDistrib = function enviarQueryDistrib(data, callback) { // realiza conexion dblink recibiendo una tabla con varios atributos
+    console.log("..");
+    console.log("query envia: ", data.body.query);
+    client.query(data.body.query, (err, res) => {
+        console.log("RESPOONSE:: ", res);
+        if (err) {
+            console.log("Error de ejecucion query.");
+            callback(false);
+
+        } else {
+            console.log("\n\nResultados de query: \n", res.rows);
+            callback(res.rows); // res.row obtiene la tabla de los resultados obtenidos del query
+        }
+    })
+
+}
